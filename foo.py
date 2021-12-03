@@ -1,23 +1,30 @@
 import os
 
-def file_is_using_crlf(file_name):
+from enum import Enum
+
+class LineEnding(Enum):
+    LF = 1
+    CRLF = 2
+    CR = 3
+
+def file_lineEnding(file_name):
     with open(file_name, "rb") as inp:
         while True:
             b = inp.read(1)
             print(f"looking at '{b}'")
             if b == b'':
-                return False
+                return None
             elif b == b'\r':
                 b2 = inp.read(1)
                 print(f"found CR, now looking at '{b2}'")
                 if b2 == b'\n':
-                    return True
+                    return LineEnding.CRLF
                 else:
-                    return False
+                    return LineEnding.CR
             elif b == b'\n':
-                return False
+                return LineEnding.LF
 
 for file in [ "qc-lf.txt", "qc-crlf.txt", "qc-cr.txt", "other" ]:
     path = os.path.join("examples", file)
     print(f"== File '{path}': ==")
-    print(file_is_using_crlf(path))
+    print(file_lineEnding(path))
