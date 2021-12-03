@@ -25,10 +25,22 @@ def file_lineEnding(file_name):
                 return LineEnding.LF
 
 def test():
-    for file in [ "qc-lf.txt", "qc-crlf.txt", "qc-cr.txt", "other" ]:
+    errors=0
+    for (file, expected) in [
+            ("qc-lf.txt", LineEnding.LF),
+            ("qc-crlf.txt", LineEnding.CRLF),
+            ("qc-cr.txt", LineEnding.CR),
+            ("other", None)
+    ]:
         path = os.path.join("examples", file)
         print(f"== File '{path}': ==")
-        print(file_lineEnding(path))
+        res = file_lineEnding(path)
+        if res == expected:
+            print("Ok.")
+        else:
+            print("FAILURE: expected {expected}, got {res}.")
+            errors = errors + 1
+    exit(errors)
 
 if __name__ == "__main__":
     test()
