@@ -7,16 +7,22 @@ class LineEnding(Enum):
     CRLF = 2
     CR = 3
 
+warnings=False
+
+def note(v):
+    if warnings:
+        print(v)
+    
 def file_lineEnding(file_name):
     with open(file_name, "rb") as inp:
         while True:
             b = inp.read(1)
-            print(f"looking at '{b}'")
+            note(f"looking at '{b}'")
             if b == b'':
                 return None
             elif b == b'\r':
                 b2 = inp.read(1)
-                print(f"found CR, now looking at '{b2}'")
+                note(f"found CR, now looking at '{b2}'")
                 if b2 == b'\n':
                     return LineEnding.CRLF
                 else:
@@ -25,7 +31,9 @@ def file_lineEnding(file_name):
                 return LineEnding.LF
 
 def test():
-    errors=0
+    global warnings
+    warnings=True
+    errors=False
     for (file, expected) in [
             ("qc-lf.txt", LineEnding.LF),
             ("qc-crlf.txt", LineEnding.CRLF),
@@ -39,8 +47,10 @@ def test():
             print("Ok.")
         else:
             print("FAILURE: expected {expected}, got {res}.")
-            errors = errors + 1
-    exit(errors)
+            errors = True
+    warnings=False
+    if errors:
+        exit(1)
 
 if __name__ == "__main__":
     test()
