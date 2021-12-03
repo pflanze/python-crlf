@@ -15,20 +15,7 @@ def note(v):
     
 def file_lineEnding(file_name):
     with open(file_name, "rb") as inp:
-        while True:
-            b = inp.read(1)
-            note(f"looking at '{b}'")
-            if b == b'':
-                return None
-            elif b == b'\r':
-                b2 = inp.read(1)
-                note(f"found CR, now looking at '{b2}'")
-                if b2 == b'\n':
-                    return LineEnding.CRLF
-                else:
-                    return LineEnding.CR
-            elif b == b'\n':
-                return LineEnding.LF
+        XXX
 
 def test():
     global warnings
