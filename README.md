@@ -24,12 +24,6 @@ Thus `read(1)` seems fine.
 
 ### Correctness: TODO
 
- *  There's a problem in that some encodings could contain the byte
-    values 10 and 13 as part of multi-byte character encodings, which
-    would lead to bogus detection. What we need is having Python
-    handle the charset decoding, yet leave alone the newline
-    characters.
-
  *  Currently, it stops on the first detection. That can be sensible
     since if a mix of line endings is detected, what should it report
     as the correct one? But possibly what is wanted in this case is to
