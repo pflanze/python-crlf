@@ -22,10 +22,3 @@ operations (`drop_while`?).
 
 Thus `read(1)` seems fine.
 
-### Correctness: TODO
-
- *  Currently, it stops on the first detection. That can be sensible
-    since if a mix of line endings is detected, what should it report
-    as the correct one? But possibly what is wanted in this case is to
-    literally report `LineEnding.MIXED`.
-
