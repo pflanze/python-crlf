@@ -15,25 +15,28 @@ def note(v):
         print(v)
     
 
+def stream_lineEndings(inp):
+    while True:
+        b = inp.read(1)
+        note(f"looking at '{b}'")
+        if b == '':
+            return None
+        elif b == '\r':
+            b2 = inp.read(1)
+            note(f"found CR, now looking at '{b2}'")
+            if b2 == '\n':
+                yield LineEnding.CRLF
+            else:
+                yield LineEnding.CR
+        elif b == '\n':
+            yield LineEnding.LF
+
 def file_lineEndings(file_name):
     with open(file_name, "r", newline="") as inp:
-        while True:
-            b = inp.read(1)
-            note(f"looking at '{b}'")
-            if b == '':
-                return None
-            elif b == '\r':
-                b2 = inp.read(1)
-                note(f"found CR, now looking at '{b2}'")
-                if b2 == '\n':
-                    yield LineEnding.CRLF
-                else:
-                    yield LineEnding.CR
-            elif b == '\n':
-                yield LineEnding.LF
+        return stream_lineEndings(inp)
 
-def file_lineEnding(file_name):
-    endings = file_lineEndings(file_name)
+def stream_lineEnding(inp):
+    endings = stream_lineEndings(inp)
     try:
         first = endings.__next__()
         for e in endings:
@@ -42,6 +45,10 @@ def file_lineEnding(file_name):
         return first
     except StopIteration:
         return None
+
+def file_lineEnding(file_name):
+    with open(file_name, "r", newline="") as inp:
+        return stream_lineEnding(inp)
 
 
 def test():
