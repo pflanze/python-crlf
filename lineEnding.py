@@ -69,7 +69,7 @@ def test():
         if res == expected:
             print("Ok.")
         else:
-            print("FAILURE: expected {expected}, got {res}.")
+            print(f"FAILURE: expected {expected}, got {res}.")
             errors = True
 
         print(f"  and with codecs.open:")
