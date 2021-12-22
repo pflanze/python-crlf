@@ -1,4 +1,5 @@
 import os
+import codecs
 
 from enum import Enum
 
@@ -70,6 +71,16 @@ def test():
         else:
             print("FAILURE: expected {expected}, got {res}.")
             errors = True
+
+        print(f"  and with codecs.open:")
+        with codecs.open(path) as stream:
+            res = stream_lineEnding(stream)
+        if res == expected:
+            print("Ok.")
+        else:
+            print(f"FAILURE: expected {expected}, got {res}.")
+            errors = True
+        
     warnings=False
     if errors:
         exit(1)
