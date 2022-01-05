@@ -54,7 +54,7 @@ def file_lineEnding(file_name):
 
 def test():
     global warnings
-    warnings=True
+    # warnings=True
     errors=0
     for (file, expected) in [
             ("lf.txt", LineEnding.LF),
