@@ -55,7 +55,7 @@ def file_lineEnding(file_name):
 def test():
     global warnings
     warnings=True
-    errors=False
+    errors=0
     for (file, expected) in [
             ("lf.txt", LineEnding.LF),
             ("crlf.txt", LineEnding.CRLF),
@@ -70,7 +70,7 @@ def test():
             print("Ok.")
         else:
             print(f"FAILURE: expected {expected}, got {res}.")
-            errors = True
+            errors += 1
 
         print(f"  and with codecs.open:")
         with codecs.open(path) as stream:
@@ -79,9 +79,10 @@ def test():
             print("Ok.")
         else:
             print(f"FAILURE: expected {expected}, got {res}.")
-            errors = True
+            errors += 1
         
     warnings=False
+    print(f"=> {errors} failure(s).")
     if errors:
         exit(1)
 
