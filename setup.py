@@ -8,7 +8,7 @@ setup(
     author_email="copying@christianjaeger.ch",
     name="python-crlf",
     url="https://github.com/pflanze/python-crlf",
-    version="cj8",
+    version="v0.1.0",
     description="Line ending detection library",
     long_description=long_description,
     long_description_content_type="text/markdown",
