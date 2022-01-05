@@ -64,6 +64,7 @@ def test():
             ("other", None)
     ]:
         path = os.path.join("examples", file)
+
         print(f"== File '{path}': ==")
         res = file_lineEnding(path)
         if res == expected:
@@ -73,7 +74,10 @@ def test():
             errors += 1
 
         print(f"  and with codecs.open:")
-        with codecs.open(path) as stream:
+        with codecs.open(path,
+                         encoding='utf-8', 
+                         # errors='strict'
+                         ) as stream:
             res = stream_lineEnding(stream)
         if res == expected:
             print("Ok.")
