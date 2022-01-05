@@ -57,10 +57,10 @@ def test():
     warnings=True
     errors=False
     for (file, expected) in [
-            ("qc-lf.txt", LineEnding.LF),
-            ("qc-crlf.txt", LineEnding.CRLF),
-            ("qc-cr.txt", LineEnding.CR),
-            ("qc-mixed.txt", LineEnding.Mixed),
+            ("lf.txt", LineEnding.LF),
+            ("crlf.txt", LineEnding.CRLF),
+            ("cr.txt", LineEnding.CR),
+            ("mixed.txt", LineEnding.Mixed),
             ("other", None)
     ]:
         path = os.path.join("examples", file)
