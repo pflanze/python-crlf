@@ -1,24 +1,23 @@
-# Line ending detection library
+# Line separator detection library
 
-This is mostly meant as a template for teaching, possibly for
-exploration, unlikely for actual future productive use.
+This reports what kind of line separator is used in a file or stream.
 
-## Analysis
+## Details
 
-To prevent Python from decoding and canonicalizing line endings and
-thus preventing detection, binary mode is used for opening, which
-means that byte strings are read instead of normal strings.
+`read(1)` is used in a loop; this has the advantage (compared with
+iterating over the file stream) that it guarantees to retrieve single
+characters, i.e. `stream_lineEnding` works even if the iterator would
+return larger strings like lines instead of single characters (which
+is important when using `codecs.open` instead of standard `open`--the
+latter supports a `newline=""` argument to split on characters, the
+former doesn't).
 
-Currently `read(1)` is used and a loop. This doesn't hide the
-underlying workings and is hence useful to explain the workings of,
-but nicer code could probably be written using iterator based
-operations (`drop_while`?).
+## Performance
 
-### Efficiency
-
-`strace` confirms that input is buffered:
+`strace` on Linux confirms that the input is buffered (using `read(1)`
+thus seems fine):
 
     read(3, "Hi\nThere\n", 4096)            = 9
 
-Thus `read(1)` seems fine.
-
+The file is being streamed, not read into memory, thus memory usage
+stays low.
